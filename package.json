@@ -1,0 +1,1 @@
+{"name":"athlete-os","version":"0.6.0","private":true,"type":"module","scripts":{"convex:dev":"convex dev","convex:deploy":"convex deploy","check:js":"node --check app.js","check:convex":"tsc --noEmit --skipLibCheck || true","deploy:vercel":"vercel --prod --yes"},"dependencies":{"convex":"^1.38.0"},"devDependencies":{"typescript":"^5.9.3"}}
