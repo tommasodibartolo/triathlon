@@ -3,121 +3,71 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Triathlon Evolution Dashboard — Stage v0.1</title>
+  <title>Triathlon Athlete OS — Stage v0.2</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="hero">
-    <div>
-      <p class="eyebrow">Stage v0.1 · Athlete OS</p>
-      <h1>Triathlon + Physique Evolution Dashboard</h1>
-      <p class="subtitle">A KPI-obsessed control room for swim, bike, run, gym, nutrition, recovery, and the delta to a muscular 70.3 athlete.</p>
-    </div>
-    <div class="goal-card">
-      <span>Primary goal</span>
-      <strong>70.3 in ~5:00–5:15</strong>
-      <small>while staying lean, muscular, and screenshot-quantified</small>
-    </div>
-  </header>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="mark"></span><div><b>Athlete OS</b><small>Triathlon × Physique</small></div></div>
+      <nav class="nav" aria-label="Dashboard sections">
+        <a href="#command">Command</a><a href="#evolution">Evolution</a><a href="#endurance">Endurance</a><a href="#strength">Strength</a><a href="#nutrition">Nutrition</a><a href="#recovery">Recovery</a><a href="#data">Data</a>
+      </nav>
+      <div class="sidebar-card"><span>Stage</span><b>v0.2 configurable</b><small>Date filters, sport filters, density, units, targets, scenarios.</small></div>
+    </aside>
 
-  <main>
-    <section class="kpi-grid" id="kpiGrid" aria-label="Executive KPI tiles"></section>
-
-    <section class="panel-grid two">
-      <article class="panel wide">
-        <div class="panel-head">
-          <div>
-            <p class="eyebrow">Training load</p>
-            <h2>Known endurance sessions</h2>
-          </div>
-          <span class="pill">source: handover PDF</span>
+    <main>
+      <section id="command" class="hero panel">
+        <div>
+          <p class="eyebrow">Executive cockpit</p>
+          <h1>Build the muscular triathlete: measurable evolution, gaps, and next actions.</h1>
+          <p class="subtitle">Not a static poster: filter periods, choose disciplines, switch units, edit targets, and inspect the delta between current evidence and race/physique goals.</p>
         </div>
-        <canvas id="trainingChart" height="260"></canvas>
-        <div class="legend" id="trainingLegend"></div>
-      </article>
-
-      <article class="panel">
-        <div class="panel-head">
-          <div>
-            <p class="eyebrow">Discipline split</p>
-            <h2>Current data density</h2>
-          </div>
+        <div class="hero-right">
+          <div class="goal-ring" id="readinessRing"><span>42%</span><small>data readiness</small></div>
+          <button id="resetControls" class="button ghost">Reset view</button>
         </div>
-        <div id="disciplineBars" class="bar-stack"></div>
-      </article>
-    </section>
+      </section>
 
-    <section class="panel-grid two">
-      <article class="panel">
-        <div class="panel-head">
-          <div>
-            <p class="eyebrow">Strength / physique</p>
-            <h2>Current week gym analytics</h2>
-          </div>
-          <span class="pill good">complete since Monday</span>
-        </div>
-        <div id="gymWeek" class="gym-grid"></div>
-      </article>
+      <section class="panel controls-panel" aria-label="Dashboard controls">
+        <div class="control"><label>Date from</label><input id="fromDate" type="date" value="2026-04-20"></div>
+        <div class="control"><label>Date to</label><input id="toDate" type="date" value="2026-05-08"></div>
+        <div class="control"><label>View</label><select id="viewMode"><option value="all">All systems</option><option value="endurance">Endurance only</option><option value="strength">Strength only</option><option value="gaps">Gap analysis</option></select></div>
+        <div class="control"><label>Units</label><select id="unitMode"><option value="metric">Metric</option><option value="imperial">Imperial</option></select></div>
+        <div class="control wide"><label>Sports</label><div class="toggle-row" id="sportToggles"></div></div>
+        <div class="control wide"><label>Dashboard density</label><input id="density" type="range" min="0" max="2" value="1"><small id="densityLabel">Analyst</small></div>
+      </section>
 
-      <article class="panel">
-        <div class="panel-head">
-          <div>
-            <p class="eyebrow">Coach delta</p>
-            <h2>Missing data to unlock precision</h2>
-          </div>
-          <span class="pill warn">required</span>
-        </div>
-        <div id="missingData" class="checklist"></div>
-      </article>
-    </section>
+      <section class="kpi-grid" id="kpiGrid"></section>
 
-    <section class="panel-grid two">
-      <article class="panel wide">
-        <div class="panel-head">
-          <div>
-            <p class="eyebrow">Progression targets</p>
-            <h2>Rep mastery → next load</h2>
-          </div>
-          <span class="pill good">tracked lifts</span>
-        </div>
-        <div id="strengthTable" class="strength-list"></div>
-      </article>
-      <article class="panel">
-        <p class="eyebrow">Weekly coverage</p>
-        <h2>Body parts hit</h2>
-        <div id="coverageChips" class="chips"></div>
-      </article>
-    </section>
+      <section id="evolution" class="panel grid-panel wide-panel">
+        <div class="panel-head"><div><p class="eyebrow">Evolution over time</p><h2>Training load, gym volume, and data quality timeline</h2></div><span class="pill">interactive hover</span></div>
+        <canvas id="evolutionChart" height="320"></canvas>
+        <div class="chart-tooltip" id="chartTip"></div>
+      </section>
 
-    <section class="panel-grid three">
-      <article class="panel">
-        <p class="eyebrow">Weekly structure</p>
-        <h2>Operating rhythm</h2>
-        <div id="weeklyPlan" class="timeline"></div>
-      </article>
-      <article class="panel">
-        <p class="eyebrow">Nutrition system</p>
-        <h2>Known preferences</h2>
-        <div id="nutritionPrefs" class="chips"></div>
-      </article>
-      <article class="panel action-panel">
-        <p class="eyebrow">Next build</p>
-        <h2>Version roadmap</h2>
-        <ol>
-          <li>Connect manual ingestion form + screenshot parser queue.</li>
-          <li>Add real bodyweight, protein, sleep, and HRV trends.</li>
-          <li>Add CTL/ATL/TSB once TSS or power/HR zones are known.</li>
-          <li>Deploy public/private stage after auth + hosting decision.</li>
-        </ol>
-      </article>
-    </section>
-  </main>
+      <section class="matrix">
+        <article id="endurance" class="panel"><div class="panel-head"><div><p class="eyebrow">Swim · Bike · Run</p><h2>Endurance evidence</h2></div><span class="pill warn">Intervals pending</span></div><div id="sessionList" class="session-list"></div></article>
+        <article class="panel"><div class="panel-head"><div><p class="eyebrow">Delta to goal</p><h2>70.3 performance model</h2></div><button class="mini" id="scenarioBtn">Aggressive scenario</button></div><div id="goalDeltas" class="delta-list"></div></article>
+      </section>
 
-  <footer>
-    <span>Dashboard generated from `Tri_Coach_Full_Analyst_Handover.pdf` + KPI research.</span>
-    <span>Database schema: `db/schema.sql`</span>
-  </footer>
+      <section id="strength" class="panel wide-panel">
+        <div class="panel-head"><div><p class="eyebrow">Physique engine</p><h2>Gym analytics, body-part balance, and progression targets</h2></div><span class="pill good">73 sets logged</span></div>
+        <div class="strength-layout"><div id="gymStats" class="stat-grid"></div><div><canvas id="strengthChart" height="260"></canvas></div></div>
+        <div id="liftTargets" class="lift-grid"></div>
+      </section>
 
+      <section class="matrix">
+        <article id="nutrition" class="panel"><div class="panel-head"><div><p class="eyebrow">Bulk without becoming slow</p><h2>Nutrition control</h2></div><span class="pill warn">macros missing</span></div><div id="nutritionPanel"></div></article>
+        <article id="recovery" class="panel"><div class="panel-head"><div><p class="eyebrow">Adaptation</p><h2>Recovery + injury risk</h2></div><span class="pill missing">not connected</span></div><div id="recoveryPanel"></div></article>
+      </section>
+
+      <section id="data" class="panel wide-panel">
+        <div class="panel-head"><div><p class="eyebrow">Source of truth</p><h2>Data connections + missing inputs</h2></div><span class="pill">Intervals athlete i483662</span></div>
+        <div id="dataPanel" class="data-grid"></div>
+      </section>
+    </main>
+  </div>
   <script src="app.js"></script>
 </body>
 </html>
