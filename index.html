@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Athlete OS — Activity Console v0.4</title>
+  <title>Athlete OS — Mobile Coach Console v0.5</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -16,7 +16,7 @@
       <button class="nav" data-view="forecast">Forecast</button>
       <button class="nav" data-view="vision">Body vision</button>
       <button class="nav" data-view="gaps">Gaps</button>
-      <div class="railMeta"><b>v0.4</b><small>atomic feed · manual delete · image timeline</small></div>
+      <div class="railMeta"><b>v0.5</b><small>mobile gym · locked devices · Garmin/Peloton</small></div>
     </aside>
 
     <main class="console">
@@ -27,7 +27,7 @@
         </div>
         <div class="quickControls">
           <label>Day <input id="day" type="date" value="2026-05-08"></label>
-          <label>Source <select id="sourceFilter"><option value="all">All</option><option value="manual">Manual</option><option value="api">API</option><option value="scrape">Scrape</option><option value="image">Image</option></select></label>
+          <label>Source <select id="sourceFilter"><option value="all">All</option><option value="manual">Manual</option><option value="garmin">Garmin</option><option value="peloton">Peloton</option><option value="intervals">Intervals</option><option value="telegram">Telegram</option><option value="api">API legacy</option><option value="scrape">Scrape</option><option value="image">Image</option></select></label>
           <label>Sport <select id="sport"><option value="all">All</option><option value="strength">Strength</option><option value="bike">Bike</option><option value="run">Run</option><option value="swim">Swim</option><option value="body">Body</option><option value="nutrition">Nutrition</option><option value="recovery">Recovery</option></select></label>
           <label>Density <input id="density" type="range" min="0" max="2" value="2"></label>
         </div>
@@ -40,7 +40,7 @@
           <article class="panel activityMain">
             <div class="panelHead">
               <div><p class="eyebrow">Standalone source of truth</p><h2>Activity feed — API / scrape / manual / image</h2></div>
-              <div class="miniActions"><button id="seedApiBtn">simulate API sync</button><button id="exportBtn">export JSON</button></div>
+              <div class="miniActions"><button id="seedGarminBtn">simulate Garmin</button><button id="seedPelotonBtn">simulate Peloton</button><button id="exportBtn">export JSON</button></div>
             </div>
             <div class="composer always">
               <select id="typeInput"><option value="set">strength set</option><option value="interval">endurance interval</option><option value="nutrition">nutrition</option><option value="recovery">recovery</option><option value="body">body metric</option><option value="note">coach note</option></select>
@@ -50,9 +50,11 @@
               <button id="saveActivity">add manual</button>
             </div>
             <div class="sourceLegend">
-              <span><i class="dot manual"></i>manual gym / food / recovery</span>
-              <span><i class="dot api"></i>Intervals / wearables API</span>
-              <span><i class="dot scrape"></i>scraped/exported platform data</span>
+              <span><i class="dot manual"></i>manual gym / nutrition / pictures</span>
+              <span><i class="dot garmin"></i>Garmin run / swim / outdoor bike locked</span>
+              <span><i class="dot peloton"></i>Peloton indoor bike locked</span>
+              <span><i class="dot intervals"></i>Intervals aggregator fallback</span>
+              <span><i class="dot telegram"></i>Telegram training input</span>
               <span><i class="dot image"></i>body image analysis</span>
             </div>
             <div class="activityFeed" id="activityFeed"></div>
@@ -69,6 +71,10 @@
       </section>
 
       <section class="view" id="view-today">
+        <section class="mobileSession panel">
+          <div class="panelHead"><div><p class="eyebrow">Mobile gym mode</p><h2 id="programTitle">Today’s program</h2></div><span class="badge">weight + reps only</span></div>
+          <div id="programList" class="programList"></div>
+        </section>
         <section class="grid">
           <article class="panel span7"><div class="panelHead"><div><p class="eyebrow">Today</p><h2>Rep / interval level log</h2></div></div><div class="feedTable" id="feedTable"></div></article>
           <article class="panel span5"><div class="panelHead"><div><p class="eyebrow">Next action</p><h2>Coach forecast</h2></div><span class="badge">adaptive</span></div><div id="forecastList" class="forecastList"></div></article>
