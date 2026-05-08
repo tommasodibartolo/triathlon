@@ -79,6 +79,13 @@ main { padding: 0 28px 32px; }
 .day span { color: var(--muted); }
 .chips { display: flex; flex-wrap: wrap; gap: 10px; }
 .chip { border: 1px solid var(--line); background: var(--panel-2); border-radius: 999px; padding: 9px 12px; color: var(--muted); font-size: 13px; }
+.gym-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.gym-card { background: var(--panel-2); border: 1px solid var(--line); border-radius: 18px; padding: 14px; }
+.gym-card .num { display: block; font-size: 30px; font-weight: 850; letter-spacing: -.04em; }
+.gym-card .txt { color: var(--muted); font-size: 13px; }
+.day-card { grid-column: 1 / -1; display: grid; gap: 8px; }
+.day-row { display: grid; grid-template-columns: 90px 1fr auto; gap: 10px; color: var(--muted); font-size: 13px; border-top: 1px solid rgba(255,255,255,.06); padding-top: 8px; }
+.day-row b { color: var(--ink); }
 .action-panel ol { color: var(--muted); padding-left: 20px; line-height: 1.65; }
 footer { padding: 20px 28px 36px; color: var(--muted); display: flex; justify-content: space-between; gap: 20px; font-size: 13px; }
 @media (max-width: 980px) {

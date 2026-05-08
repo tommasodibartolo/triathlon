@@ -28,7 +28,17 @@ const seed = {
     ['Rear Delt Fly', '90x12x3', '100x12/10', '100x12/12/10'],
     ['Leg Curl', '110x10x2', '120x10x2', '120x12/10/10']
   ],
-  nutritionPreferences: ['Siggi yogurt + oats + fruit + egg whites + whey', 'banana / pineapple / berries', 'espresso mixed into yogurt', 'rice waffle + jam around workouts', 'low-fat correction after high-fat meals']
+  nutritionPreferences: ['Siggi yogurt + oats + fruit + egg whites + whey', 'banana / pineapple / berries', 'espresso mixed into yogurt', 'rice waffle + jam around workouts', 'low-fat correction after high-fat meals'],
+  gymWeek: {
+    weeklySets: 73, weeklyReps: 795, weeklyTonnageLb: 50561, bodyPartsCovered: 12, daysLogged: 4,
+    byDay: [
+      {day:'Monday', focus:'Chest + Triceps', sets:22, tonnageLb:11676},
+      {day:'Tuesday', focus:'Legs', sets:15, tonnageLb:17460},
+      {day:'Thursday', focus:'Back + Biceps', sets:19, tonnageLb:14515},
+      {day:'Friday', focus:'Shoulders + Rear Delts', sets:17, tonnageLb:6910}
+    ],
+    coverage: ['Chest','Triceps','Quads','Hamstrings','Glutes','Calves','Back','Lats','Biceps','Front Delts','Side Delts','Rear Delts']
+  }
 };
 
 const missing = [
@@ -55,7 +65,7 @@ function calculateKpis() {
     { label: 'Bike evidence', value: `${fmt(bikeMin)}m`, delta: `${fmt(avgBikePower)}W avg across known rides`, status: 'good', spark: [144,161,151] },
     { label: 'Run evidence', value: `${fmt(runKm)}km`, delta: `Best known pace ${pace(bestRunPace)}`, status: 'good', spark: [344,331] },
     { label: 'Goal delta', value: 'Missing', delta: 'Race date + current estimate required', status: 'missing', spark: [10,20,26,35,44] },
-    { label: 'Strength momentum', value: '6 lifts', delta: 'Shoulders / back / curls / hamstrings progressing', status: 'good', spark: [2,3,4,5,6] },
+    { label: 'Strength momentum', value: `${seed.gymWeek.weeklySets} sets`, delta: `${fmt(seed.gymWeek.weeklyTonnageLb)} lb tonnage · ${seed.gymWeek.bodyPartsCovered}/12 body parts`, status: 'good', spark: [22,15,19,17] },
     { label: 'Nutrition precision', value: 'Partial', delta: 'Preferences known; kcal/macros/bodyweight missing', status: 'warn', spark: [30,38,42,45] },
     { label: 'Recovery score', value: 'Missing', delta: 'No sleep, HRV, RHR, soreness feed yet', status: 'missing', spark: [20,20,20] },
     { label: 'Data quality', value: '42%', delta: 'Good screenshots for workouts; weak body/nutrition/recovery', status: 'warn', spark: [20,24,35,42] }
@@ -122,6 +132,17 @@ function renderStrength() {
     <div class="lift"><strong>${ex}</strong><span>Previous: ${prev}</span><span>Current: ${cur}</span><span>Next: ${target}</span></div>`).join('');
 }
 
+function renderGymWeek() {
+  const g = seed.gymWeek;
+  document.getElementById('gymWeek').innerHTML = `
+    <div class="gym-card"><span class="num">${g.daysLogged}</span><span class="txt">gym days logged</span></div>
+    <div class="gym-card"><span class="num">${g.weeklySets}</span><span class="txt">working sets</span></div>
+    <div class="gym-card"><span class="num">${g.weeklyReps}</span><span class="txt">total reps</span></div>
+    <div class="gym-card"><span class="num">${fmt(g.weeklyTonnageLb)}</span><span class="txt">estimated lb tonnage</span></div>
+    <div class="gym-card day-card">${g.byDay.map(d => `<div class="day-row"><b>${d.day}</b><span>${d.focus}</span><span>${d.sets} sets · ${fmt(d.tonnageLb)} lb</span></div>`).join('')}</div>`;
+  document.getElementById('coverageChips').innerHTML = g.coverage.map(x => `<span class="chip">✓ ${x}</span>`).join('');
+}
+
 function renderMissing() {
   document.getElementById('missingData').innerHTML = missing.map(([title, why]) => `<div class="check"><span>□</span><span><b>${title}</b><br>${why}</span></div>`).join('');
 }
@@ -131,5 +152,5 @@ function renderPlan() {
   document.getElementById('nutritionPrefs').innerHTML = seed.nutritionPreferences.map(x => `<span class="chip">${x}</span>`).join('');
 }
 
-renderKpis(); renderChart(); renderBars(); renderStrength(); renderMissing(); renderPlan();
+renderKpis(); renderChart(); renderBars(); renderStrength(); renderGymWeek(); renderMissing(); renderPlan();
 window.addEventListener('resize', renderChart);

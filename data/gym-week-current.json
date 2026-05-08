@@ -1,0 +1,57 @@
+{
+  "weekLabel": "since Monday",
+  "source": "telegram_week_gym_log",
+  "sessions": [
+    {
+      "day": "Monday",
+      "focus": "Chest + Triceps",
+      "exercises": [
+        {"name": "Incline DB Press", "sets": [{"weight":40,"unit":"lb","reps":10,"type":"warmup"},{"weight":55,"unit":"lb","reps":8},{"weight":55,"unit":"lb","reps":8},{"weight":55,"unit":"lb","reps":6}]},
+        {"name": "Flat DB Press", "sets": [{"weight":55,"unit":"lb","reps":8},{"weight":55,"unit":"lb","reps":8},{"weight":55,"unit":"lb","reps":6}]},
+        {"name": "Cable Fly low-to-high", "sets": [{"weight":17.5,"unit":"lb","reps":10},{"weight":17.5,"unit":"lb","reps":10},{"weight":17.5,"unit":"lb","reps":10},{"weight":15,"unit":"lb","reps":20,"type":"burnout"}]},
+        {"name": "Chest Fly high-to-low", "sets": [{"weight":17.5,"unit":"lb","reps":12},{"weight":17.5,"unit":"lb","reps":12},{"weight":20,"unit":"lb","reps":12}]},
+        {"name": "Triceps Pushdown", "sets": [{"weight":60,"unit":"kg","reps":12},{"weight":70,"unit":"kg","reps":12},{"weight":70,"unit":"kg","reps":12}]},
+        {"name": "Overhead Tricep Extension", "sets": [{"weight":60,"unit":"lb","reps":12},{"weight":70,"unit":"lb","reps":10},{"weight":70,"unit":"lb","reps":10}]},
+        {"name": "Single-Arm Cross-Body Pushdown", "sets": [{"weight":10,"unit":"lb","reps":12},{"weight":10,"unit":"lb","reps":12},{"weight":10,"unit":"lb","reps":12}]}
+      ]
+    },
+    {
+      "day": "Tuesday",
+      "focus": "Legs",
+      "exercises": [
+        {"name": "Bulgarian Split Squat", "sets": [{"weight":45,"unit":"lb","reps":15},{"weight":45,"unit":"lb","reps":15},{"weight":55,"unit":"lb","reps":13}]},
+        {"name": "Hack Squat", "sets": [{"weight":45,"unit":"lb","reps":15},{"weight":70,"unit":"lb","reps":12},{"weight":90,"unit":"lb","reps":12}]},
+        {"name": "Leg Curl", "sets": [{"weight":90,"unit":"lb","reps":12},{"weight":120,"unit":"lb","reps":10},{"weight":120,"unit":"lb","reps":10}]},
+        {"name": "Glute Drive", "sets": [{"weight":110,"unit":"lb","reps":12,"note":"55/side"},{"weight":130,"unit":"lb","reps":10,"note":"65/side"},{"weight":130,"unit":"lb","reps":10,"note":"65/side"}]},
+        {"name": "Calf Raise", "sets": [{"weight":150,"unit":"lb","reps":12},{"weight":150,"unit":"lb","reps":12},{"weight":150,"unit":"lb","reps":12}]}
+      ]
+    },
+    {
+      "day": "Thursday",
+      "focus": "Back + Biceps",
+      "exercises": [
+        {"name": "Lat Pulldown", "sets": [{"weight":120,"unit":"lb","reps":10},{"weight":140,"unit":"lb","reps":10},{"weight":160,"unit":"lb","reps":8},{"weight":160,"unit":"lb","reps":9}]},
+        {"name": "Seated Row", "sets": [{"weight":120,"unit":"lb","reps":10},{"weight":140,"unit":"lb","reps":10},{"weight":140,"unit":"lb","reps":10}]},
+        {"name": "Straight-Arm Pulldown", "sets": [{"weight":57.5,"unit":"lb","reps":12},{"weight":65,"unit":"lb","reps":12},{"weight":65,"unit":"lb","reps":10}]},
+        {"name": "Hammer Curl", "sets": [{"weight":40,"unit":"lb","reps":10},{"weight":40,"unit":"lb","reps":10},{"weight":40,"unit":"lb","reps":10}]},
+        {"name": "Seated DB Curl", "sets": [{"weight":27.5,"unit":"lb","reps":10},{"weight":27.5,"unit":"lb","reps":10},{"weight":27.5,"unit":"lb","reps":10}]},
+        {"name": "Cross-Body Hammer Curl", "sets": [{"weight":35,"unit":"lb","reps":10},{"weight":35,"unit":"lb","reps":10},{"weight":35,"unit":"lb","reps":10}]}
+      ]
+    },
+    {
+      "day": "Friday",
+      "focus": "Shoulders + Rear Delts",
+      "exercises": [
+        {"name": "DB Shoulder Press", "sets": [{"weight":35,"unit":"lb","reps":12,"type":"warmup"},{"weight":50,"unit":"lb","reps":8},{"weight":50,"unit":"lb","reps":8},{"weight":50,"unit":"lb","reps":7}]},
+        {"name": "DB Lateral Raise", "sets": [{"weight":20,"unit":"lb","reps":15},{"weight":25,"unit":"lb","reps":12},{"weight":27.5,"unit":"lb","reps":10}]},
+        {"name": "Cable Lateral Raise", "sets": [{"weight":12.5,"unit":"lb","reps":12},{"weight":12.5,"unit":"lb","reps":12},{"weight":12.5,"unit":"lb","reps":12}]},
+        {"name": "Rear Delt Fly", "sets": [{"weight":90,"unit":"lb","reps":12},{"weight":100,"unit":"lb","reps":12},{"weight":100,"unit":"lb","reps":10}]},
+        {"name": "Face Pull", "sets": [{"weight":25,"unit":"lb","reps":12},{"weight":30,"unit":"lb","reps":12},{"weight":30,"unit":"lb","reps":12}]},
+        {"name": "Single-Arm Rear Shoulder Cable Pull", "sets": [{"weight":5,"unit":"lb","reps":12},{"weight":7.5,"unit":"lb","reps":10}]}
+      ]
+    }
+  ],
+  "bodyPartCoverage": ["Chest","Triceps","Quads","Hamstrings","Glutes","Calves","Back","Lats","Biceps","Front Delts","Side Delts","Rear Delts"],
+  "progressions": ["DB Shoulder Press 45s → 50s","Rear Delt Fly 90 → 100","Hammer Curl 40 × 10 × 3 achieved","DB Curl 27.5 × 10 × 3 achieved","Leg Curl 110 → 120","Cable Lateral 10 → 12.5","Pushdown 70 × 12 × 2"],
+  "assessment": "One of the strongest hybrid weeks so far: endurance maintained, strength progressed, no major regression, body-part balance improved."
+}

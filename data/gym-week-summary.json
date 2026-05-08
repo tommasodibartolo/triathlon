@@ -1,0 +1,37 @@
+{
+  "weeklySets": 73,
+  "weeklyReps": 795,
+  "weeklyTonnageLb": 50561,
+  "bodyPartsCovered": 12,
+  "daysLogged": 4,
+  "byDay": [
+    {
+      "day": "Monday",
+      "focus": "Chest + Triceps",
+      "sets": 22,
+      "reps": 234,
+      "tonnageLb": 11676
+    },
+    {
+      "day": "Tuesday",
+      "focus": "Legs",
+      "sets": 15,
+      "reps": 182,
+      "tonnageLb": 17460
+    },
+    {
+      "day": "Thursday",
+      "focus": "Back + Biceps",
+      "sets": 19,
+      "reps": 191,
+      "tonnageLb": 14515
+    },
+    {
+      "day": "Friday",
+      "focus": "Shoulders + Rear Delts",
+      "sets": 17,
+      "reps": 188,
+      "tonnageLb": 6910
+    }
+  ]
+}
