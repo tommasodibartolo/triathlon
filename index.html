@@ -3,68 +3,65 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Triathlon Athlete OS — Stage v0.2</title>
+  <title>Athlete OS — Coach Console v0.3</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="app-shell">
-    <aside class="sidebar">
-      <div class="brand"><span class="mark"></span><div><b>Athlete OS</b><small>Triathlon × Physique</small></div></div>
-      <nav class="nav" aria-label="Dashboard sections">
-        <a href="#command">Command</a><a href="#evolution">Evolution</a><a href="#endurance">Endurance</a><a href="#strength">Strength</a><a href="#nutrition">Nutrition</a><a href="#recovery">Recovery</a><a href="#data">Data</a>
-      </nav>
-      <div class="sidebar-card"><span>Stage</span><b>v0.2 configurable</b><small>Date filters, sport filters, density, units, targets, scenarios.</small></div>
+  <div class="shell">
+    <aside class="rail">
+      <div class="logo"><span></span><b>Athlete OS</b><small>coach console</small></div>
+      <button class="nav active" data-view="today">Today</button>
+      <button class="nav" data-view="feed">Rep feed</button>
+      <button class="nav" data-view="evolution">Evolution</button>
+      <button class="nav" data-view="forecast">Forecast</button>
+      <button class="nav" data-view="gaps">Gaps</button>
+      <div class="railMeta"><b>v0.3</b><small>smaller · denser · rep-level</small></div>
     </aside>
 
-    <main>
-      <section id="command" class="hero panel">
-        <div>
-          <p class="eyebrow">Executive cockpit</p>
-          <h1>Build the muscular triathlete: measurable evolution, gaps, and next actions.</h1>
-          <p class="subtitle">Not a static poster: filter periods, choose disciplines, switch units, edit targets, and inspect the delta between current evidence and race/physique goals.</p>
+    <main class="console">
+      <header class="topbar">
+        <div><p class="eyebrow">AI Coach command surface</p><h1>Daily evidence → exercise evolution → next set forecast.</h1></div>
+        <div class="quickControls">
+          <label>Day <input id="day" type="date" value="2026-05-08"></label>
+          <label>Sport <select id="sport"><option value="all">All</option><option value="strength">Strength</option><option value="bike">Bike</option><option value="run">Run</option><option value="swim">Swim</option></select></label>
+          <label>Density <input id="density" type="range" min="0" max="2" value="2"></label>
         </div>
-        <div class="hero-right">
-          <div class="goal-ring" id="readinessRing"><span>42%</span><small>data readiness</small></div>
-          <button id="resetControls" class="button ghost">Reset view</button>
-        </div>
-      </section>
+      </header>
 
-      <section class="panel controls-panel" aria-label="Dashboard controls">
-        <div class="control"><label>Date from</label><input id="fromDate" type="date" value="2026-04-20"></div>
-        <div class="control"><label>Date to</label><input id="toDate" type="date" value="2026-05-08"></div>
-        <div class="control"><label>View</label><select id="viewMode"><option value="all">All systems</option><option value="endurance">Endurance only</option><option value="strength">Strength only</option><option value="gaps">Gap analysis</option></select></div>
-        <div class="control"><label>Units</label><select id="unitMode"><option value="metric">Metric</option><option value="imperial">Imperial</option></select></div>
-        <div class="control wide"><label>Sports</label><div class="toggle-row" id="sportToggles"></div></div>
-        <div class="control wide"><label>Dashboard density</label><input id="density" type="range" min="0" max="2" value="1"><small id="densityLabel">Analyst</small></div>
-      </section>
+      <section class="strip" id="coachStrip"></section>
 
-      <section class="kpi-grid" id="kpiGrid"></section>
+      <section class="grid">
+        <article class="panel span7" id="liveFeedPanel">
+          <div class="panelHead"><div><p class="eyebrow">Main dashboard feed</p><h2>Daily log — rep / interval level</h2></div><button id="addSetBtn">+ quick log</button></div>
+          <div class="composer" id="composer">
+            <input id="exerciseInput" placeholder="exercise e.g. DB Shoulder Press" />
+            <input id="weightInput" placeholder="weight" type="number" />
+            <input id="repsInput" placeholder="reps" type="number" />
+            <select id="rpeInput"><option>RPE 7</option><option>RPE 8</option><option>RPE 9</option><option>RPE 10</option></select>
+            <button id="saveSet">log set</button>
+          </div>
+          <div class="feedTable" id="feedTable"></div>
+        </article>
 
-      <section id="evolution" class="panel grid-panel wide-panel">
-        <div class="panel-head"><div><p class="eyebrow">Evolution over time</p><h2>Training load, gym volume, and data quality timeline</h2></div><span class="pill">interactive hover</span></div>
-        <canvas id="evolutionChart" height="320"></canvas>
-        <div class="chart-tooltip" id="chartTip"></div>
-      </section>
+        <article class="panel span5">
+          <div class="panelHead"><div><p class="eyebrow">Coach brain</p><h2>Next action forecast</h2></div><span class="badge">adaptive</span></div>
+          <div id="forecastList" class="forecastList"></div>
+        </article>
 
-      <section class="matrix">
-        <article id="endurance" class="panel"><div class="panel-head"><div><p class="eyebrow">Swim · Bike · Run</p><h2>Endurance evidence</h2></div><span class="pill warn">Intervals pending</span></div><div id="sessionList" class="session-list"></div></article>
-        <article class="panel"><div class="panel-head"><div><p class="eyebrow">Delta to goal</p><h2>70.3 performance model</h2></div><button class="mini" id="scenarioBtn">Aggressive scenario</button></div><div id="goalDeltas" class="delta-list"></div></article>
-      </section>
+        <article class="panel span6">
+          <div class="panelHead"><div><p class="eyebrow">Exercise type</p><h2>Evolution by movement</h2></div><select id="exerciseSelect"></select></div>
+          <canvas id="exerciseChart" height="230"></canvas>
+          <div id="movementNotes" class="microGrid"></div>
+        </article>
 
-      <section id="strength" class="panel wide-panel">
-        <div class="panel-head"><div><p class="eyebrow">Physique engine</p><h2>Gym analytics, body-part balance, and progression targets</h2></div><span class="pill good">73 sets logged</span></div>
-        <div class="strength-layout"><div id="gymStats" class="stat-grid"></div><div><canvas id="strengthChart" height="260"></canvas></div></div>
-        <div id="liftTargets" class="lift-grid"></div>
-      </section>
+        <article class="panel span6">
+          <div class="panelHead"><div><p class="eyebrow">Triathlon layer</p><h2>Endurance forecast + constraints</h2></div><span class="badge warn">Intervals pending</span></div>
+          <div id="enduranceCards" class="microGrid"></div>
+        </article>
 
-      <section class="matrix">
-        <article id="nutrition" class="panel"><div class="panel-head"><div><p class="eyebrow">Bulk without becoming slow</p><h2>Nutrition control</h2></div><span class="pill warn">macros missing</span></div><div id="nutritionPanel"></div></article>
-        <article id="recovery" class="panel"><div class="panel-head"><div><p class="eyebrow">Adaptation</p><h2>Recovery + injury risk</h2></div><span class="pill missing">not connected</span></div><div id="recoveryPanel"></div></article>
-      </section>
-
-      <section id="data" class="panel wide-panel">
-        <div class="panel-head"><div><p class="eyebrow">Source of truth</p><h2>Data connections + missing inputs</h2></div><span class="pill">Intervals athlete i483662</span></div>
-        <div id="dataPanel" class="data-grid"></div>
+        <article class="panel span4"><div class="panelHead"><div><p class="eyebrow">Readiness</p><h2>Today</h2></div></div><div id="readiness" class="stack"></div></article>
+        <article class="panel span4"><div class="panelHead"><div><p class="eyebrow">Nutrition</p><h2>Bulk control</h2></div></div><div id="nutrition" class="stack"></div></article>
+        <article class="panel span4"><div class="panelHead"><div><p class="eyebrow">Missing data</p><h2>Unlock accuracy</h2></div></div><div id="missing" class="stack"></div></article>
       </section>
     </main>
   </div>
