@@ -1,0 +1,46 @@
+{
+  "athlete": {
+    "name": "Tommaso",
+    "primaryGoal": "70.3 performance around 5:00–5:15 while staying lean and muscular",
+    "style": "screenshot-driven, quantified, direct, gram-oriented coaching",
+    "targets": {
+      "raceTimeMinutesLow": 300,
+      "raceTimeMinutesHigh": 315,
+      "weeklyCompletionPct": 90,
+      "proteinGPerKgMin": 1.6,
+      "proteinGPerKgMax": 2.2,
+      "strengthProgression": "rep mastery before load increase"
+    }
+  },
+  "weeklyStructure": [
+    {"day": "Monday", "plan": "Chest + Triceps + Ride"},
+    {"day": "Tuesday", "plan": "Legs + Neuromuscular Ride"},
+    {"day": "Wednesday", "plan": "Run + Swim, no gym"},
+    {"day": "Thursday", "plan": "Back + Biceps + Ride"},
+    {"day": "Friday", "plan": "Shoulders + Run"},
+    {"day": "Saturday", "plan": "Long Ride + Brick"},
+    {"day": "Sunday", "plan": "Long Run"}
+  ],
+  "sessions": [
+    {"id": "long-ride-baseline", "date": "2026-05-02", "type": "bike", "label": "Saturday long ride", "durationMin": 143.02, "distanceKm": 73.11, "calories": 1084, "avgPowerW": 151, "cadenceRpm": 90, "avgHr": 130, "source": "handover_pdf"},
+    {"id": "brick-run-baseline", "date": "2026-05-02", "type": "run", "label": "Saturday brick run", "durationMin": 30.13, "distanceKm": 5.47, "paceSecPerKm": 331, "avgHr": 140, "source": "handover_pdf"},
+    {"id": "wednesday-run-baseline", "date": "2026-04-30", "type": "run", "label": "Wednesday run", "durationMin": 59.57, "distanceKm": 10.40, "paceSecPerKm": 344, "avgHr": 137, "calories": 776, "source": "handover_pdf"},
+    {"id": "neuro-ride-baseline", "date": "2026-04-29", "type": "bike", "label": "Tuesday neuromuscular ride", "durationMin": 60, "avgPowerW": 161, "maxPowerW": 606, "source": "handover_pdf"},
+    {"id": "sofia-ride-baseline", "date": "2026-05-01", "type": "bike", "label": "Thursday Sofia ride", "durationMin": 60, "avgPowerW": 144, "speedMph": 18.3, "source": "handover_pdf"}
+  ],
+  "strengthProgression": [
+    {"exercise": "DB Shoulder Press", "previous": "45x10/10/10", "current": "50x8/8/7", "progress": "+5 lb", "nextTarget": "50x8/8/8", "group": "shoulders"},
+    {"exercise": "Lat Pulldown", "previous": "160x8/8", "current": "160x8/9", "progress": "+1 rep", "nextTarget": "160x9/9", "group": "back"},
+    {"exercise": "Hammer Curl", "previous": "40x10/10/8", "current": "40x10/10/10", "progress": "rep mastery", "nextTarget": "45x8", "group": "biceps"},
+    {"exercise": "DB Curl", "previous": "27.5x10/10/8", "current": "27.5x10/10/10", "progress": "rep mastery", "nextTarget": "30x8", "group": "biceps"},
+    {"exercise": "Rear Delt Fly", "previous": "90x12x3", "current": "100x12/10", "progress": "+10 lb", "nextTarget": "100x12/12/10", "group": "rear delts"},
+    {"exercise": "Leg Curl", "previous": "110x10x2", "current": "120x10x2", "progress": "+10 lb", "nextTarget": "120x12/10/10", "group": "hamstrings"}
+  ],
+  "nutritionPreferences": [
+    "Siggi yogurt + oats + fruit + egg whites + whey",
+    "banana, pineapple, berries",
+    "espresso mixed into yogurt",
+    "rice waffle + jam around workouts",
+    "high-fat meals require downstream low-fat correction meals"
+  ]
+}

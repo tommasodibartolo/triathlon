@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Triathlon Evolution Dashboard — Stage v0.1</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Stage v0.1 · Athlete OS</p>
+      <h1>Triathlon + Physique Evolution Dashboard</h1>
+      <p class="subtitle">A KPI-obsessed control room for swim, bike, run, gym, nutrition, recovery, and the delta to a muscular 70.3 athlete.</p>
+    </div>
+    <div class="goal-card">
+      <span>Primary goal</span>
+      <strong>70.3 in ~5:00–5:15</strong>
+      <small>while staying lean, muscular, and screenshot-quantified</small>
+    </div>
+  </header>
+
+  <main>
+    <section class="kpi-grid" id="kpiGrid" aria-label="Executive KPI tiles"></section>
+
+    <section class="panel-grid two">
+      <article class="panel wide">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">Training load</p>
+            <h2>Known endurance sessions</h2>
+          </div>
+          <span class="pill">source: handover PDF</span>
+        </div>
+        <canvas id="trainingChart" height="260"></canvas>
+        <div class="legend" id="trainingLegend"></div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">Discipline split</p>
+            <h2>Current data density</h2>
+          </div>
+        </div>
+        <div id="disciplineBars" class="bar-stack"></div>
+      </article>
+    </section>
+
+    <section class="panel-grid two">
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">Strength / physique</p>
+            <h2>Progression targets</h2>
+          </div>
+          <span class="pill good">rep mastery logic</span>
+        </div>
+        <div id="strengthTable" class="strength-list"></div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">Coach delta</p>
+            <h2>Missing data to unlock precision</h2>
+          </div>
+          <span class="pill warn">required</span>
+        </div>
+        <div id="missingData" class="checklist"></div>
+      </article>
+    </section>
+
+    <section class="panel-grid three">
+      <article class="panel">
+        <p class="eyebrow">Weekly structure</p>
+        <h2>Operating rhythm</h2>
+        <div id="weeklyPlan" class="timeline"></div>
+      </article>
+      <article class="panel">
+        <p class="eyebrow">Nutrition system</p>
+        <h2>Known preferences</h2>
+        <div id="nutritionPrefs" class="chips"></div>
+      </article>
+      <article class="panel action-panel">
+        <p class="eyebrow">Next build</p>
+        <h2>Version roadmap</h2>
+        <ol>
+          <li>Connect manual ingestion form + screenshot parser queue.</li>
+          <li>Add real bodyweight, protein, sleep, and HRV trends.</li>
+          <li>Add CTL/ATL/TSB once TSS or power/HR zones are known.</li>
+          <li>Deploy public/private stage after auth + hosting decision.</li>
+        </ol>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <span>Dashboard generated from `Tri_Coach_Full_Analyst_Handover.pdf` + KPI research.</span>
+    <span>Database schema: `db/schema.sql`</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
