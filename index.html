@@ -14,6 +14,7 @@
       <button class="nav" data-view="today">Today</button>
       <button class="nav" data-view="evolution">Evolution</button>
       <button class="nav" data-view="forecast">Forecast</button>
+      <button class="nav" data-view="nutrition">Nutrition</button>
       <button class="nav" data-view="vision">Body vision</button>
       <button class="nav" data-view="gaps">Gaps</button>
       <div class="railMeta"><b>v0.5</b><small>mobile gym · locked devices · Garmin/Peloton</small></div>
@@ -93,6 +94,14 @@
 
       <section class="view" id="view-forecast">
         <section class="grid"><article class="panel span6"><div class="panelHead"><div><p class="eyebrow">Strength</p><h2>Next exact prescriptions</h2></div></div><div id="forecastList2" class="forecastList"></div></article><article class="panel span6"><div class="panelHead"><div><p class="eyebrow">Triathlon</p><h2>Endurance forecast + constraints</h2></div><span class="badge warn">Intervals key pending</span></div><div id="enduranceCards" class="microGrid"></div></article></section>
+      </section>
+
+      <section class="view" id="view-nutrition">
+        <section class="grid">
+          <article class="panel span8"><div class="panelHead"><div><p class="eyebrow">Post-workout prescription</p><h2>Today’s meals from burn + bulk target</h2></div><span class="badge">approve / edit</span></div><div id="nutritionPlan" class="mealGrid"></div></article>
+          <article class="panel span4"><div class="panelHead"><div><p class="eyebrow">Energy logic</p><h2>Burn → intake target</h2></div></div><div id="nutritionMath" class="stack"></div></article>
+          <article class="panel span12"><div class="panelHead"><div><p class="eyebrow">Adaptive week</p><h2>Calendar + session shifting</h2></div><span class="badge">goal-oriented</span></div><div id="adaptiveCalendar" class="calendarGrid"></div></article>
+        </section>
       </section>
 
       <section class="view" id="view-vision">
