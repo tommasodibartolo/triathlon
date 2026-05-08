@@ -3,65 +3,113 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Athlete OS — Coach Console v0.3</title>
+  <title>Athlete OS — Activity Console v0.4</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="shell">
     <aside class="rail">
-      <div class="logo"><span></span><b>Athlete OS</b><small>coach console</small></div>
-      <button class="nav active" data-view="today">Today</button>
-      <button class="nav" data-view="feed">Rep feed</button>
+      <div class="logo"><span></span><b>Athlete OS</b><small>AI coach console</small></div>
+      <button class="nav active" data-view="activity">Activity</button>
+      <button class="nav" data-view="today">Today</button>
       <button class="nav" data-view="evolution">Evolution</button>
       <button class="nav" data-view="forecast">Forecast</button>
+      <button class="nav" data-view="vision">Body vision</button>
       <button class="nav" data-view="gaps">Gaps</button>
-      <div class="railMeta"><b>v0.3</b><small>smaller · denser · rep-level</small></div>
+      <div class="railMeta"><b>v0.4</b><small>atomic feed · manual delete · image timeline</small></div>
     </aside>
 
     <main class="console">
       <header class="topbar">
-        <div><p class="eyebrow">AI Coach command surface</p><h1>Daily evidence → exercise evolution → next set forecast.</h1></div>
+        <div>
+          <p class="eyebrow">AI Coach operating system</p>
+          <h1>All evidence enters one activity feed. The coach turns it into decisions.</h1>
+        </div>
         <div class="quickControls">
           <label>Day <input id="day" type="date" value="2026-05-08"></label>
-          <label>Sport <select id="sport"><option value="all">All</option><option value="strength">Strength</option><option value="bike">Bike</option><option value="run">Run</option><option value="swim">Swim</option></select></label>
+          <label>Source <select id="sourceFilter"><option value="all">All</option><option value="manual">Manual</option><option value="api">API</option><option value="scrape">Scrape</option><option value="image">Image</option></select></label>
+          <label>Sport <select id="sport"><option value="all">All</option><option value="strength">Strength</option><option value="bike">Bike</option><option value="run">Run</option><option value="swim">Swim</option><option value="body">Body</option><option value="nutrition">Nutrition</option><option value="recovery">Recovery</option></select></label>
           <label>Density <input id="density" type="range" min="0" max="2" value="2"></label>
         </div>
       </header>
 
       <section class="strip" id="coachStrip"></section>
 
-      <section class="grid">
-        <article class="panel span7" id="liveFeedPanel">
-          <div class="panelHead"><div><p class="eyebrow">Main dashboard feed</p><h2>Daily log — rep / interval level</h2></div><button id="addSetBtn">+ quick log</button></div>
-          <div class="composer" id="composer">
-            <input id="exerciseInput" placeholder="exercise e.g. DB Shoulder Press" />
-            <input id="weightInput" placeholder="weight" type="number" />
-            <input id="repsInput" placeholder="reps" type="number" />
-            <select id="rpeInput"><option>RPE 7</option><option>RPE 8</option><option>RPE 9</option><option>RPE 10</option></select>
-            <button id="saveSet">log set</button>
-          </div>
-          <div class="feedTable" id="feedTable"></div>
-        </article>
+      <section class="view active" id="view-activity">
+        <div class="activityLayout">
+          <article class="panel activityMain">
+            <div class="panelHead">
+              <div><p class="eyebrow">Standalone source of truth</p><h2>Activity feed — API / scrape / manual / image</h2></div>
+              <div class="miniActions"><button id="seedApiBtn">simulate API sync</button><button id="exportBtn">export JSON</button></div>
+            </div>
+            <div class="composer always">
+              <select id="typeInput"><option value="set">strength set</option><option value="interval">endurance interval</option><option value="nutrition">nutrition</option><option value="recovery">recovery</option><option value="body">body metric</option><option value="note">coach note</option></select>
+              <input id="titleInput" placeholder="exercise / activity / metric" />
+              <input id="valueInput" placeholder="value e.g. 50 lb × 8 / 73km / 160g protein" />
+              <select id="rpeInput"><option value="">RPE —</option><option>RPE 6</option><option>RPE 7</option><option>RPE 8</option><option>RPE 9</option><option>RPE 10</option></select>
+              <button id="saveActivity">add manual</button>
+            </div>
+            <div class="sourceLegend">
+              <span><i class="dot manual"></i>manual gym / food / recovery</span>
+              <span><i class="dot api"></i>Intervals / wearables API</span>
+              <span><i class="dot scrape"></i>scraped/exported platform data</span>
+              <span><i class="dot image"></i>body image analysis</span>
+            </div>
+            <div class="activityFeed" id="activityFeed"></div>
+          </article>
 
-        <article class="panel span5">
-          <div class="panelHead"><div><p class="eyebrow">Coach brain</p><h2>Next action forecast</h2></div><span class="badge">adaptive</span></div>
-          <div id="forecastList" class="forecastList"></div>
-        </article>
+          <aside class="panel coachSide">
+            <div class="panelHead"><div><p class="eyebrow">Coach brain</p><h2>Feed intelligence</h2></div><span class="badge">live</span></div>
+            <div id="feedIntel" class="stack"></div>
+            <hr>
+            <div class="panelHead tight"><div><p class="eyebrow">Data pipeline</p><h2>Source readiness</h2></div></div>
+            <div id="pipeline" class="stack"></div>
+          </aside>
+        </div>
+      </section>
 
-        <article class="panel span6">
-          <div class="panelHead"><div><p class="eyebrow">Exercise type</p><h2>Evolution by movement</h2></div><select id="exerciseSelect"></select></div>
-          <canvas id="exerciseChart" height="230"></canvas>
-          <div id="movementNotes" class="microGrid"></div>
-        </article>
+      <section class="view" id="view-today">
+        <section class="grid">
+          <article class="panel span7"><div class="panelHead"><div><p class="eyebrow">Today</p><h2>Rep / interval level log</h2></div></div><div class="feedTable" id="feedTable"></div></article>
+          <article class="panel span5"><div class="panelHead"><div><p class="eyebrow">Next action</p><h2>Coach forecast</h2></div><span class="badge">adaptive</span></div><div id="forecastList" class="forecastList"></div></article>
+          <article class="panel span4"><div class="panelHead"><div><p class="eyebrow">Readiness</p><h2>Today</h2></div></div><div id="readiness" class="stack"></div></article>
+          <article class="panel span4"><div class="panelHead"><div><p class="eyebrow">Nutrition</p><h2>Bulk control</h2></div></div><div id="nutrition" class="stack"></div></article>
+          <article class="panel span4"><div class="panelHead"><div><p class="eyebrow">Missing data</p><h2>Unlock accuracy</h2></div></div><div id="missing" class="stack"></div></article>
+        </section>
+      </section>
 
-        <article class="panel span6">
-          <div class="panelHead"><div><p class="eyebrow">Triathlon layer</p><h2>Endurance forecast + constraints</h2></div><span class="badge warn">Intervals pending</span></div>
-          <div id="enduranceCards" class="microGrid"></div>
-        </article>
+      <section class="view" id="view-evolution">
+        <section class="grid">
+          <article class="panel span8"><div class="panelHead"><div><p class="eyebrow">Exercise type</p><h2>Evolution by movement</h2></div><select id="exerciseSelect"></select></div><canvas id="exerciseChart" height="260"></canvas></article>
+          <article class="panel span4"><div class="panelHead"><div><p class="eyebrow">Decision layer</p><h2>Movement notes</h2></div></div><div id="movementNotes" class="microGrid"></div></article>
+        </section>
+      </section>
 
-        <article class="panel span4"><div class="panelHead"><div><p class="eyebrow">Readiness</p><h2>Today</h2></div></div><div id="readiness" class="stack"></div></article>
-        <article class="panel span4"><div class="panelHead"><div><p class="eyebrow">Nutrition</p><h2>Bulk control</h2></div></div><div id="nutrition" class="stack"></div></article>
-        <article class="panel span4"><div class="panelHead"><div><p class="eyebrow">Missing data</p><h2>Unlock accuracy</h2></div></div><div id="missing" class="stack"></div></article>
+      <section class="view" id="view-forecast">
+        <section class="grid"><article class="panel span6"><div class="panelHead"><div><p class="eyebrow">Strength</p><h2>Next exact prescriptions</h2></div></div><div id="forecastList2" class="forecastList"></div></article><article class="panel span6"><div class="panelHead"><div><p class="eyebrow">Triathlon</p><h2>Endurance forecast + constraints</h2></div><span class="badge warn">Intervals key pending</span></div><div id="enduranceCards" class="microGrid"></div></article></section>
+      </section>
+
+      <section class="view" id="view-vision">
+        <section class="grid">
+          <article class="panel span5">
+            <div class="panelHead"><div><p class="eyebrow">Computer vision input</p><h2>Body image timeline</h2></div><span class="badge">local preview</span></div>
+            <div class="imageDrop" id="imageDrop">
+              <input id="imageInput" type="file" accept="image/*" multiple>
+              <b>Drop / select progress photos</b>
+              <small>front / side / back, same lighting. Stored in browser for now; later: CV embeddings + measurements.</small>
+            </div>
+            <div class="composer always two"><input id="imageLabel" placeholder="label e.g. front relaxed / post workout"><button id="saveImageNote">add image note</button></div>
+            <div id="imageTimeline" class="imageTimeline"></div>
+          </article>
+          <article class="panel span7">
+            <div class="panelHead"><div><p class="eyebrow">Vision coach</p><h2>Change analysis goals</h2></div></div>
+            <div id="visionMetrics" class="visionBoard"></div>
+          </article>
+        </section>
+      </section>
+
+      <section class="view" id="view-gaps">
+        <section class="grid"><article class="panel span12"><div class="panelHead"><div><p class="eyebrow">What is missing</p><h2>Inputs needed for the smartest coach</h2></div></div><div id="gapBoard" class="gapBoard"></div></article></section>
       </section>
     </main>
   </div>
