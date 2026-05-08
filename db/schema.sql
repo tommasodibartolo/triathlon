@@ -139,18 +139,54 @@ CREATE TABLE IF NOT EXISTS thresholds (
   PRIMARY KEY (athlete_id, effective_date)
 );
 
-CREATE TABLE IF NOT EXISTS derived_daily_metrics (
+CREATE TABLE IF NOT EXISTS daily_metrics (
   athlete_id TEXT NOT NULL REFERENCES athletes(id),
   date TEXT NOT NULL,
-  daily_tss REAL,
-  weekly_tss REAL,
-  ctl_42d REAL,
-  atl_7d REAL,
+  tss_total REAL,
+  ctl REAL,
+  atl REAL,
   tsb REAL,
-  weekly_minutes REAL,
-  protein_g_per_kg REAL,
+  strength_sets INTEGER,
+  strength_tonnage_lb REAL,
+  protein_per_kg REAL,
   calorie_balance REAL,
   recovery_score REAL,
   data_quality_score REAL,
   PRIMARY KEY (athlete_id, date)
+);
+
+CREATE TABLE IF NOT EXISTS source_connections (
+  id TEXT PRIMARY KEY,
+  athlete_id TEXT NOT NULL REFERENCES athletes(id),
+  provider TEXT NOT NULL, -- intervals_icu, nutrition_app, scale, manual
+  provider_athlete_id TEXT,
+  auth_type TEXT, -- api_key, oauth, manual_export
+  status TEXT NOT NULL DEFAULT 'pending',
+  last_sync_at TEXT,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS sync_runs (
+  id TEXT PRIMARY KEY,
+  connection_id TEXT NOT NULL REFERENCES source_connections(id),
+  started_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  finished_at TEXT,
+  status TEXT NOT NULL,
+  oldest TEXT,
+  newest TEXT,
+  records_seen INTEGER DEFAULT 0,
+  records_imported INTEGER DEFAULT 0,
+  error TEXT
+);
+
+CREATE TABLE IF NOT EXISTS raw_import_objects (
+  id TEXT PRIMARY KEY,
+  connection_id TEXT NOT NULL REFERENCES source_connections(id),
+  sync_run_id TEXT REFERENCES sync_runs(id),
+  provider_object_type TEXT NOT NULL,
+  provider_object_id TEXT,
+  source_updated_at TEXT,
+  payload_json TEXT NOT NULL,
+  imported_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE(connection_id, provider_object_type, provider_object_id)
 );
