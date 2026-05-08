@@ -16,7 +16,7 @@ For Tommaso's personal dashboard, use Basic API key auth first. OAuth is unneces
 
 ## Key endpoints to ingest
 
-Use athlete id `i<id>` or the athlete id shown by Intervals.icu. Many examples use `0`/`i0` for self in client contexts, but we should confirm from the logged-in profile/API response.
+Use athlete id `i<id>` or the athlete id shown by Intervals.icu. Browser history confirms Tommaso's athlete route as `https://intervals.icu/athlete/i483662`, so the current athlete id is likely `i483662`. We still need an API-key read test to confirm access.
 
 ### Activities
 
