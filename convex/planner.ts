@@ -15,6 +15,18 @@ export const upsertSession = mutation({
   },
 });
 
+export const removeSessionBySlot = mutation({
+  args: { athleteSlug: v.string(), day: v.string(), slot: v.string() },
+  handler: async (ctx, args) => {
+    const athlete = await ctx.db.query("athletes").withIndex("by_slug", q => q.eq("slug", args.athleteSlug)).unique();
+    if (!athlete) return false;
+    const existing = await ctx.db.query("plannedSessions").withIndex("by_athlete_day", q => q.eq("athleteId", athlete._id).eq("day", args.day)).filter(q => q.eq(q.field("slot"), args.slot)).unique();
+    if (!existing) return false;
+    await ctx.db.delete(existing._id);
+    return true;
+  },
+});
+
 export const shiftSession = mutation({
   args: { sessionId: v.id("plannedSessions"), toDay: v.string() },
   handler: async (ctx, args) => {

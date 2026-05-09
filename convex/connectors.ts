@@ -1,4 +1,4 @@
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 
 export const setConnectionStatus = mutation({
@@ -11,5 +11,14 @@ export const setConnectionStatus = mutation({
     const doc = { athleteId: athlete._id, provider: args.provider, status: args.status, secretRef: args.secretRef, metadata: args.metadata ?? {}, updatedAt: ts };
     if (existing) { await ctx.db.patch(existing._id, doc); return existing._id; }
     return await ctx.db.insert("deviceConnections", { ...doc, createdAt: ts });
+  },
+});
+
+export const list = query({
+  args: { athleteSlug: v.string() },
+  handler: async (ctx, args) => {
+    const athlete = await ctx.db.query("athletes").withIndex("by_slug", q => q.eq("slug", args.athleteSlug)).unique();
+    if (!athlete) return [];
+    return await ctx.db.query("deviceConnections").withIndex("by_athlete_provider", q => q.eq("athleteId", athlete._id)).collect();
   },
 });
