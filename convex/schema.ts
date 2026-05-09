@@ -91,6 +91,47 @@ export default defineSchema({
     error: v.optional(v.string()),
   }).index("by_athlete_provider", ["athleteId", "provider"]),
 
+  bodyMetrics: defineTable({
+    athleteId: v.id("athletes"),
+    day: v.string(),
+    t: v.string(),
+    bodyWeightKg: v.optional(v.number()),
+    bodyFatPct: v.optional(v.number()),
+    waistCm: v.optional(v.number()),
+    source: sourceValidator,
+    note: v.optional(v.string()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  }).index("by_athlete_day", ["athleteId", "day"]),
+
+  activityMetricSnapshots: defineTable({
+    athleteId: v.id("athletes"),
+    activityRecordId: v.optional(v.id("activityRecords")),
+    day: v.string(),
+    sport: sportValidator,
+    source: sourceValidator,
+    sourceId: v.optional(v.string()),
+    metrics: v.any(),
+    rawText: v.optional(v.string()),
+    imageRef: v.optional(v.string()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  }).index("by_athlete_day", ["athleteId", "day"]).index("by_source", ["source", "sourceId"]),
+
+  feedbackSessions: defineTable({
+    athleteId: v.id("athletes"),
+    day: v.string(),
+    sessionTitle: v.string(),
+    bodyWeightKg: v.optional(v.number()),
+    athleteClass: v.optional(v.number()),
+    summary: v.string(),
+    coachFeedback: v.string(),
+    nutritionRecommendation: v.any(),
+    inputs: v.any(),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  }).index("by_athlete_day", ["athleteId", "day"]),
+
   coachDecisions: defineTable({
     athleteId: v.id("athletes"),
     day: v.string(),
