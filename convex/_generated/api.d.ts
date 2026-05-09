@@ -9,6 +9,7 @@
  */
 
 import type * as connectors from "../connectors.js";
+import type * as feedback from "../feedback.js";
 import type * as http from "../http.js";
 import type * as ledger from "../ledger.js";
 import type * as nutrition from "../nutrition.js";
@@ -23,6 +24,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   connectors: typeof connectors;
+  feedback: typeof feedback;
   http: typeof http;
   ledger: typeof ledger;
   nutrition: typeof nutrition;
