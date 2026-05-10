@@ -10,21 +10,23 @@
   <div class="shell">
     <aside class="rail">
       <div class="logo"><span></span><b>Athlete OS</b><small>AI coach console</small></div>
-      <button class="nav active" data-view="activity">Activity</button>
-      <button class="nav" data-view="today">Today</button>
-      <button class="nav" data-view="evolution">Evolution</button>
-      <button class="nav" data-view="forecast">Forecast</button>
+      <button class="nav active" data-view="gym-input">Gym Input</button>
+      <button class="nav" data-view="food-input">Food Input</button>
+      <button class="nav" data-view="bike">Bike</button>
+      <button class="nav" data-view="run">Run</button>
+      <button class="nav" data-view="swim">Swim</button>
+      <button class="nav" data-view="gym">Gym</button>
       <button class="nav" data-view="nutrition">Nutrition</button>
-      <button class="nav" data-view="vision">Body vision</button>
-      <button class="nav" data-view="gaps">Gaps</button>
-      <div class="railMeta"><b>v0.5</b><small>mobile gym · locked devices · Garmin/Peloton</small></div>
+      <button class="nav" data-view="analytics">Analytics</button>
+      <button class="nav" data-view="goal-gap">Goal/Gap</button>
+      <div class="railMeta"><b>v0.7</b><small>separate input screens · sport tabs</small></div>
     </aside>
 
     <main class="console">
       <header class="topbar">
         <div>
           <p class="eyebrow">AI Coach operating system</p>
-          <h1>All evidence enters one activity feed. The coach turns it into decisions.</h1>
+          <h1>Input screens are separate. Sport tabs stay clean for output metrics and coaching decisions.</h1>
         </div>
         <div class="quickControls">
           <label>Day <input id="day" type="date" value="2026-05-08"></label>
@@ -36,7 +38,42 @@
 
       <section class="strip" id="coachStrip"></section>
 
-      <section class="view active" id="view-activity">
+
+
+      <section class="view active" id="view-gym-input">
+        <section class="inputHero panel">
+          <div class="panelHead"><div><p class="eyebrow">Pure input screen</p><h2>Gym — today’s suggested lifts</h2></div><span class="badge">editable prefill</span></div>
+          <p class="muted">Suggestions come from the weekly calendar and recent progression. Edit, add a custom exercise, then log actual load + reps.</p>
+          <div id="gymInputList" class="programList inputOnly"></div>
+          <div class="composer always gymAdd">
+            <input id="customGymName" placeholder="add exercise e.g. Incline DB Press" />
+            <input id="customGymWeight" inputmode="decimal" placeholder="weight" />
+            <input id="customGymReps" inputmode="numeric" placeholder="reps" />
+            <button id="addCustomGym">add custom set</button>
+          </div>
+        </section>
+      </section>
+
+      <section class="view" id="view-food-input">
+        <section class="grid">
+          <article class="panel span8">
+            <div class="panelHead"><div><p class="eyebrow">Pure input screen</p><h2>Food — suggested meals from plan + training load</h2></div><span class="badge">approve / edit / add</span></div>
+            <p class="muted">Prefilled by day type, calendar load, and deficit SOP. Edit the text if reality differs; approved meals become nutrition ledger records.</p>
+            <div id="foodInputList" class="mealGrid inputOnly"></div>
+          </article>
+          <article class="panel span4">
+            <div class="panelHead"><div><p class="eyebrow">Add anything else</p><h2>Manual food</h2></div></div>
+            <div class="composer always">
+              <input id="customFoodName" placeholder="meal / food" />
+              <input id="customFoodValue" placeholder="grams/macros/kcal notes" />
+              <button id="addCustomFood">add food log</button>
+            </div>
+            <div id="foodInputMath" class="stack"></div>
+          </article>
+        </section>
+      </section>
+
+      <section class="view" id="view-activity">
         <div class="activityLayout">
           <article class="panel activityMain">
             <div class="panelHead">
@@ -103,6 +140,15 @@
           <article class="panel span12"><div class="panelHead"><div><p class="eyebrow">Adaptive week</p><h2>Calendar + session shifting</h2></div><span class="badge">goal-oriented</span></div><div id="adaptiveCalendar" class="calendarGrid"></div></article>
         </section>
       </section>
+
+
+
+      <section class="view" id="view-bike"><section class="grid"><article class="panel span12"><div class="panelHead"><div><p class="eyebrow">Sport output</p><h2>Bike metrics</h2></div><span class="badge">device records locked</span></div><div id="bikeMetrics" class="sportBoard"></div></article></section></section>
+      <section class="view" id="view-run"><section class="grid"><article class="panel span12"><div class="panelHead"><div><p class="eyebrow">Sport output</p><h2>Run metrics</h2></div><span class="badge">device records locked</span></div><div id="runMetrics" class="sportBoard"></div></article></section></section>
+      <section class="view" id="view-swim"><section class="grid"><article class="panel span12"><div class="panelHead"><div><p class="eyebrow">Sport output</p><h2>Swim metrics</h2></div><span class="badge">device records locked</span></div><div id="swimMetrics" class="sportBoard"></div></article></section></section>
+      <section class="view" id="view-gym"><section class="grid"><article class="panel span8"><div class="panelHead"><div><p class="eyebrow">Sport output</p><h2>Gym progression</h2></div></div><div id="gymMetrics" class="sportBoard"></div></article><article class="panel span4"><div class="panelHead"><div><p class="eyebrow">Next lifts</p><h2>Strength forecast</h2></div></div><div id="gymForecast" class="forecastList"></div></article></section></section>
+      <section class="view" id="view-analytics"><section class="grid"><article class="panel span12"><div class="panelHead"><div><p class="eyebrow">System output</p><h2>Analytics overview</h2></div></div><div id="analyticsMetrics" class="sportBoard"></div></article></section></section>
+      <section class="view" id="view-goal-gap"><section class="grid"><article class="panel span12"><div class="panelHead"><div><p class="eyebrow">Goal / gap</p><h2>What separates today from the target athlete</h2></div></div><div id="goalGapMetrics" class="gapBoard"></div></article></section></section>
 
       <section class="view" id="view-vision">
         <section class="grid">
