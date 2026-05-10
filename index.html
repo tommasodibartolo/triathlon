@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Athlete OS — Input + Sport Tabs v0.7</title>
+  <title>Athlete OS — Weekly Gym Plan v0.8</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -19,7 +19,7 @@
       <button class="nav" data-view="nutrition">Nutrition</button>
       <button class="nav" data-view="analytics">Analytics</button>
       <button class="nav" data-view="goal-gap">Goal/Gap</button>
-      <div class="railMeta"><b>v0.7</b><small>separate input screens · sport tabs</small></div>
+      <div class="railMeta"><b>v0.8</b><small>weekly gym plan · one-click approval</small></div>
     </aside>
 
     <main class="console">
@@ -29,7 +29,7 @@
           <h1>Input screens are separate. Sport tabs stay clean for output metrics and coaching decisions.</h1>
         </div>
         <div class="quickControls">
-          <label>Day <input id="day" type="date" value="2026-05-08"></label>
+          <label>Day <input id="day" type="date" value="2026-05-11"></label>
           <label>Source <select id="sourceFilter"><option value="all">All</option><option value="manual">Manual</option><option value="garmin">Garmin</option><option value="peloton">Peloton</option><option value="intervals">Intervals</option><option value="telegram">Telegram</option><option value="api">API legacy</option><option value="scrape">Scrape</option><option value="image">Image</option></select></label>
           <label>Sport <select id="sport"><option value="all">All</option><option value="strength">Strength</option><option value="bike">Bike</option><option value="run">Run</option><option value="swim">Swim</option><option value="body">Body</option><option value="nutrition">Nutrition</option><option value="recovery">Recovery</option></select></label>
           <label>Density <input id="density" type="range" min="0" max="2" value="2"></label>
@@ -42,8 +42,8 @@
 
       <section class="view active" id="view-gym-input">
         <section class="inputHero panel">
-          <div class="panelHead"><div><p class="eyebrow">Pure input screen</p><h2>Gym — today’s suggested lifts</h2></div><span class="badge">editable prefill</span></div>
-          <p class="muted">Suggestions come from the weekly calendar and recent progression. Edit, add a custom exercise, then log actual load + reps.</p>
+          <div class="panelHead"><div><p class="eyebrow">Pure input screen</p><h2 id="gymInputTitle">Gym — today’s suggested lifts</h2></div><span class="badge">editable prefill</span></div>
+          <p class="muted" id="gymInputMeta">Suggestions come from the weekly calendar and recent progression. Edit, add a custom exercise, then approve/log actual load + reps.</p><button id="approveGymDay" class="primaryWide">approve full day plan</button>
           <div id="gymInputList" class="programList inputOnly"></div>
           <div class="composer always gymAdd">
             <input id="customGymName" placeholder="add exercise e.g. Incline DB Press" />

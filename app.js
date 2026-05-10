@@ -25,7 +25,39 @@ function deficitRuleForDay(trainingBurn){
   return {type:'long / brick / hard day',deficit:'0–250 kcal',target:'maintenance to burn − 250 kcal',why:'performance and adaptation first; under-fueling hurts next sessions'};
 }
 const bulkSurplus=0;
-const weekPlan={1:['Incline DB Press','DB Shoulder Press','Cable Lateral Raise','Rear Delt Fly','Hammer Curl'],2:['Back Squat or Leg Press','Romanian Deadlift','Leg Curl','Calf Raise','Core plank'],3:['Lat Pulldown','Seated Row','Flat DB Press','DB Curl','Triceps Pressdown'],4:['Swim technique','Z2 bike','Mobility'],5:['Full-body pump','Lateral Raise','Rear Delt Fly','Leg Curl'],6:['Long bike / brick run'],0:['Recovery walk','Mobility','Progress photos']};
+
+const weekPlan={1:['Incline DB Press','Flat DB Press','Cable Fly low-to-high','Chest Fly high-to-low','Triceps Pushdown','Overhead Tricep Extension','Single-Arm Cross-Body Pushdown'],2:['Bulgarian Split Squat','Hack Squat','Leg Curl','Glute Drive','Calf Raise'],3:['Swim technique','Z2 bike','Mobility'],4:['Lat Pulldown','Seated Row','Straight-Arm Pulldown','Hammer Curl','Seated DB Curl','Cross-Body Hammer Curl'],5:['DB Shoulder Press','DB Lateral Raise','Cable Lateral Raise','Rear Delt Fly','Face Pull','Single-Arm Rear Shoulder Cable Pull'],6:['Long bike / brick run'],0:['Recovery walk','Mobility','Progress photos']};
+const gymWeekPlan={
+  1:{title:'Monday — Chest + Triceps',focus:'Chest + Triceps',dateHint:'2026-05-11',exercises:[
+    {name:'Incline DB Press',unit:'lb',prev:'55×8/8/6',prevTop:55,prevReps:22,target:'55×8/8/7+',sets:[{w:55,r:8},{w:55,r:8},{w:55,r:7}],growth:'+4.5% volume',coach:'micro-progress: add 1 rep on set 3 before jumping load'},
+    {name:'Flat DB Press',unit:'lb',prev:'55×8/8/6',prevTop:55,prevReps:22,target:'55×8/8/7+',sets:[{w:55,r:8},{w:55,r:8},{w:55,r:7}],growth:'+4.5% volume',coach:'same weight, cleaner final set'},
+    {name:'Cable Fly low-to-high',unit:'lb',prev:'17.5×10/10/10 + 15×20',prevTop:17.5,prevReps:50,target:'17.5×11/10/10 + 15×20',sets:[{w:17.5,r:11},{w:17.5,r:10},{w:17.5,r:10},{w:15,r:20}],growth:'+2.0% reps',coach:'keep tension; no shoulder irritation'},
+    {name:'Chest Fly high-to-low',unit:'lb',prev:'17.5×12/12, 20×12',prevTop:20,prevReps:36,target:'20×10/10/10',sets:[{w:20,r:10},{w:20,r:10},{w:20,r:10}],growth:'+14.3% load',coach:'load progression, accept slightly lower reps'},
+    {name:'Triceps Pushdown',unit:'kg',prev:'60×12,70×12/12',prevTop:70,prevReps:36,target:'70×12/12/12',sets:[{w:70,r:12},{w:70,r:12},{w:70,r:12}],growth:'+7.7% tonnage',coach:'all working sets at top weight'},
+    {name:'Overhead Tricep Extension',unit:'lb',prev:'60×12,70×10/10',prevTop:70,prevReps:32,target:'70×10/10/11+',sets:[{w:70,r:10},{w:70,r:10},{w:70,r:11}],growth:'+3.1% volume',coach:'elbows warm; only chase last-set rep'},
+    {name:'Single-Arm Cross-Body Pushdown',unit:'lb',prev:'10×12/12/12',prevTop:10,prevReps:36,target:'12.5×10/10/10 or 10×13s',sets:[{w:12.5,r:10},{w:12.5,r:10},{w:12.5,r:10}],growth:'+4.2% tonnage',coach:'if form breaks, edit back to 10×13'}]},
+  2:{title:'Tuesday — Legs',focus:'Legs',exercises:[
+    {name:'Bulgarian Split Squat',unit:'lb',prev:'45×15/15,55×13',target:'45×15,55×12/12',sets:[{w:45,r:15},{w:55,r:12},{w:55,r:12}],growth:'+6–8% intensity',coach:'don’t destroy brick/run legs'},
+    {name:'Hack Squat',unit:'lb',prev:'45×15,70×12,90×12',target:'70×12,90×12/12',sets:[{w:70,r:12},{w:90,r:12},{w:90,r:12}],growth:'+14% top-set volume',coach:'controlled depth'},
+    {name:'Leg Curl',unit:'lb',prev:'90×12,120×10/10',target:'120×10/10/11+',sets:[{w:120,r:10},{w:120,r:10},{w:120,r:11}],growth:'+3.3% volume',coach:'hamstring priority for run durability'},
+    {name:'Glute Drive',unit:'lb',prev:'110×12,130×10/10',target:'130×10/10/11+',sets:[{w:130,r:10},{w:130,r:10},{w:130,r:11}],growth:'+3.3% volume',coach:'hips locked, no lumbar extension'},
+    {name:'Calf Raise',unit:'lb',prev:'150×12×3',target:'150×13/12/12',sets:[{w:150,r:13},{w:150,r:12},{w:150,r:12}],growth:'+2.8% reps',coach:'run-protective calf capacity'}]},
+  4:{title:'Thursday — Back + Biceps',focus:'Back + Biceps',exercises:[
+    {name:'Lat Pulldown',unit:'lb',prev:'160×8/9 top',target:'160×9/9/9',sets:[{w:160,r:9},{w:160,r:9},{w:160,r:9}],growth:'+5–8% volume',coach:'own 160 before 170'},
+    {name:'Seated Row',unit:'lb',prev:'120×10,140×10/10',target:'140×10/10/11',sets:[{w:140,r:10},{w:140,r:10},{w:140,r:11}],growth:'+3.3% volume',coach:'scapular control'},
+    {name:'Straight-Arm Pulldown',unit:'lb',prev:'57.5×12,65×12/10',target:'65×12/11/11',sets:[{w:65,r:12},{w:65,r:11},{w:65,r:11}],growth:'+3–6% volume',coach:'lats, not triceps'},
+    {name:'Hammer Curl',unit:'lb',prev:'40×10×3',target:'40×11/10/10',sets:[{w:40,r:11},{w:40,r:10},{w:40,r:10}],growth:'+3.3% reps',coach:'earn 40×12s before 45'},
+    {name:'Seated DB Curl',unit:'lb',prev:'27.5×10×3',target:'27.5×11/10/10',sets:[{w:27.5,r:11},{w:27.5,r:10},{w:27.5,r:10}],growth:'+3.3% reps',coach:'no swing'},
+    {name:'Cross-Body Hammer Curl',unit:'lb',prev:'35×10×3',target:'35×11/10/10',sets:[{w:35,r:11},{w:35,r:10},{w:35,r:10}],growth:'+3.3% reps',coach:'forearm/brachialis quality'}]},
+  5:{title:'Friday — Shoulders + Rear Delts',focus:'Shoulders + Rear Delts',exercises:[
+    {name:'DB Shoulder Press',unit:'lb',prev:'50×8/8/7',target:'50×8/8/8',sets:[{w:50,r:8},{w:50,r:8},{w:50,r:8}],growth:'+4.3% volume',coach:'must hit 8/8/8 before increasing'},
+    {name:'DB Lateral Raise',unit:'lb',prev:'20×15,25×12,27.5×10',target:'25×12,27.5×10/10',sets:[{w:25,r:12},{w:27.5,r:10},{w:27.5,r:10}],growth:'+7–10% intensity',coach:'strict side delt'},
+    {name:'Cable Lateral Raise',unit:'lb',prev:'12.5×12×3',target:'12.5×13/12/12',sets:[{w:12.5,r:13},{w:12.5,r:12},{w:12.5,r:12}],growth:'+2.8% reps',coach:'slow negative'},
+    {name:'Rear Delt Fly',unit:'lb',prev:'90×12,100×12/10',target:'100×12/12/11+',sets:[{w:100,r:12},{w:100,r:12},{w:100,r:11}],growth:'+6–9% volume',coach:'rear delt priority'},
+    {name:'Face Pull',unit:'lb',prev:'25×12,30×12/12',target:'30×12×3',sets:[{w:30,r:12},{w:30,r:12},{w:30,r:12}],growth:'+8.7% tonnage',coach:'shoulder health'},
+    {name:'Single-Arm Rear Shoulder Cable Pull',unit:'lb',prev:'5×12,7.5×10',target:'7.5×10/10/10',sets:[{w:7.5,r:10},{w:7.5,r:10},{w:7.5,r:10}],growth:'+50% set volume',coach:'small load; exact form'}]}
+};
+
 let activity=load(STORE_KEY,base.sets);let images=load(IMAGE_KEY,[]);let mealApprovals=load(MEALS,{});
 function load(k,f){try{return JSON.parse(localStorage.getItem(k))||f}catch{return f}}function save(){localStorage.setItem(STORE_KEY,JSON.stringify(activity));localStorage.setItem(IMAGE_KEY,JSON.stringify(images));localStorage.setItem(MEALS,JSON.stringify(mealApprovals))}
 function now(){return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}function uid(){return Math.random().toString(36).slice(2,9)}function est1rm(w,r){return w&&r?w*(1+r/30):0}
@@ -83,12 +115,38 @@ function renderCalendar(){
 }
 function renderProgram(){let dt=new Date($('day').value+'T12:00:00'),dow=dt.getDay(),names=weekPlan[dow]||weekPlan[1];$('programTitle').textContent=['Sunday recovery','Monday push/shoulders','Tuesday legs','Wednesday pull/chest','Thursday endurance','Friday pump/accessory','Saturday long endurance'][dow]||'Today’s program';$('programList').innerHTML=names.map((ex,i)=>`<div class="programItem"><div><b>${ex}</b><small>${i<3?'priority lift':'support work'} · enter only actual load + reps</small></div><input inputmode="decimal" placeholder="lb/kg" id="pw${i}"><input inputmode="numeric" placeholder="reps" id="pr${i}"><button data-log-program="${i}">log</button></div>`).join('');document.querySelectorAll('[data-log-program]').forEach(b=>b.onclick=()=>{let i=b.dataset.logProgram,w=$('pw'+i).value,r=$('pr'+i).value;if(!w&&!r)return;activity.unshift({id:uid(),t:now(),day:$('day').value,source:'manual',sport:'strength',type:'set',ex:names[i],value:`${w} × ${r}`,w:+w||0,reps:+r||0,set:1,rpe:'',note:'mobile program input'});save();render()})}
 
+
+function plannedGymForDay(){
+  const dt=new Date($('day').value+'T12:00:00'), dow=dt.getDay();
+  return gymWeekPlan[dow] || {title:['Sunday recovery','Monday — Chest + Triceps','Tuesday — Legs','Wednesday — Endurance / Mobility','Thursday — Back + Biceps','Friday — Shoulders + Rear Delts','Saturday — Long endurance'][dow],focus:'fallback',exercises:(weekPlan[dow]||weekPlan[1]).map(name=>({name,unit:'lb',prev:'—',target:'edit target',sets:[{w:'',r:''}],growth:'—',coach:'fallback until calendar sync'}))};
+}
 function renderGymInput(){
   if(!$('gymInputList')) return;
-  let dt=new Date($('day').value+'T12:00:00'),dow=dt.getDay(),names=weekPlan[dow]||weekPlan[1];
-  $('gymInputList').innerHTML=names.map((ex,i)=>{let f=base.forecast.find(x=>x.ex===ex),hint=f?f.next:(i<3?'3 sets · controlled progression':'2–3 support sets');return `<div class="programItem inputCard"><div><b contenteditable="true" id="gex${i}">${ex}</b><small>${hint} · edit name if needed</small></div><input inputmode="decimal" placeholder="target/actual weight" id="giw${i}"><input inputmode="numeric" placeholder="reps" id="gir${i}"><button data-log-gym-input="${i}">log set</button></div>`}).join('');
-  document.querySelectorAll('[data-log-gym-input]').forEach(b=>b.onclick=()=>{let i=b.dataset.logGymInput,ex=$('gex'+i).textContent.trim()||names[i],w=$('giw'+i).value,r=$('gir'+i).value;if(!ex||(!w&&!r))return;activity.unshift({id:uid(),t:now(),day:$('day').value,source:'manual',sport:'strength',type:'set',ex,value:`${w} × ${r}`,w:+w||0,reps:+r||0,set:1,rpe:'',note:'gym input screen'});save();render()});
+  const plan=plannedGymForDay();
+  if($('gymInputTitle')) $('gymInputTitle').textContent=plan.title;
+  if($('gymInputMeta')) $('gymInputMeta').innerHTML=`<b>${plan.focus}</b> · targets are prefilled from last week. Edit any field, then approve one exercise or the whole day.`;
+  $('gymInputList').innerHTML=plan.exercises.map((ex,i)=>{
+    const setText=ex.sets.map((s,j)=>`<div class="setLine"><span>set ${j+1}</span><input inputmode="decimal" value="${s.w}" id="giw${i}_${j}" aria-label="${ex.name} set ${j+1} weight"><b>${ex.unit}</b><input inputmode="numeric" value="${s.r}" id="gir${i}_${j}" aria-label="${ex.name} set ${j+1} reps"><em>reps</em></div>`).join('');
+    return `<div class="programItem inputCard gymPlanCard"><div class="planHead"><div><b contenteditable="true" id="gex${i}">${ex.name}</b><small>previous: ${ex.prev} → target: ${ex.target}</small></div><span class="growthBadge">${ex.growth}</span></div><div class="setGrid">${setText}</div><small class="coachNote">${ex.coach}</small><button data-approve-exercise="${i}">approve exercise</button></div>`;
+  }).join('');
+  document.querySelectorAll('[data-approve-exercise]').forEach(b=>b.onclick=()=>approveGymExercise(+b.dataset.approveExercise));
 }
+function collectGymExerciseRows(i){
+  const plan=plannedGymForDay(), ex=plan.exercises[i], name=$('gex'+i).textContent.trim()||ex.name, rows=[];
+  ex.sets.forEach((s,j)=>{let w=$(`giw${i}_${j}`).value,r=$(`gir${i}_${j}`).value;if(w||r) rows.push({id:uid(),t:now(),day:$('day').value,source:'manual',sport:'strength',type:'set',ex:name,value:`${w} ${ex.unit} × ${r}`,w:+w||0,reps:+r||0,set:j+1,rpe:'',note:`approved plan · prev ${ex.prev} · growth ${ex.growth}`})});
+  return rows;
+}
+function approveGymExercise(i){
+  activity.unshift(...collectGymExerciseRows(i));
+  save();render();
+}
+function approveGymDay(){
+  const plan=plannedGymForDay(), rows=[];
+  plan.exercises.forEach((_,i)=>rows.push(...collectGymExerciseRows(i)));
+  activity.unshift(...rows);
+  save();render();
+}
+
 function renderFoodInput(){
   if(!$('foodInputList')) return;
   const b=calcBurn(), day=$('day').value, plan=nutritionTemplate(), approved=mealApprovals[day]||{};
@@ -113,6 +171,7 @@ function renderGaps(){$('gapBoard').innerHTML=base.missing.concat(['Manual edit 
 function bind(){document.querySelectorAll('.nav').forEach(b=>b.onclick=()=>{view=b.dataset.view;render()});['day','sport','sourceFilter','density'].forEach(id=>$(id).oninput=render);$('saveActivity').onclick=()=>{let type=$('typeInput').value,title=$('titleInput').value.trim()||'Manual input',value=$('valueInput').value.trim(),rpe=($('rpeInput').value||'').replace('RPE ','');let m=value.match(/(\d+(?:\.\d+)?)\s*(?:lb|kg)?\s*[x×]\s*(\d+)/i);activity.unshift({id:uid(),t:now(),day:$('day').value,source:'manual',sport:inferSport(type,title),type,ex:title,value,w:m?+m[1]:0,reps:m?+m[2]:0,set:1,rpe:rpe?+rpe:'',note:value||'manual entry'});$('titleInput').value='';$('valueInput').value='';save();render()};$('seedGarminBtn').onclick=()=>{activity.unshift({id:uid(),t:now(),day:$('day').value,source:'garmin',source_id:'demo_'+uid(),locked:true,deletable:false,sport:'run',type:'activity',ex:'Garmin synced run/swim',value:'device import',w:0,reps:38,rpe:6,note:'locked Garmin device record'});save();render()};$('seedPelotonBtn').onclick=()=>{activity.unshift({id:uid(),t:now(),day:$('day').value,source:'peloton',source_id:'demo_'+uid(),locked:true,deletable:false,sport:'bike',type:'activity',ex:'Peloton synced ride',value:'power/output import',w:165,reps:45,rpe:7,note:'locked Peloton bike record'});save();render()};$('exportBtn').onclick=()=>{let blob=new Blob([JSON.stringify({activity,images:images.map(x=>({...x,src:'[image-data-url omitted]'}))},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='athlete-os-activity.json';a.click()};$('imageInput').onchange=e=>{[...e.target.files].forEach(file=>{let fr=new FileReader();fr.onload=()=>{images.unshift({id:uid(),src:fr.result,label:$('imageLabel').value||file.name,day:$('day').value,t:now()});activity.unshift({id:uid(),t:now(),day:$('day').value,source:'image',sport:'body',type:'body',ex:'Progress photo',value:$('imageLabel').value||file.name,note:'body vision input'});save();render()};fr.readAsDataURL(file)})};$('saveImageNote').onclick=()=>{activity.unshift({id:uid(),t:now(),day:$('day').value,source:'image',sport:'body',type:'body',ex:'Image analysis note',value:$('imageLabel').value||'photo note',note:'manual body vision note'});save();render()}}
 
 document.addEventListener('click',e=>{
+  if(e.target?.id==='approveGymDay'){approveGymDay();return;}
   if(e.target?.id==='addCustomGym'){
     const ex=$('customGymName').value.trim()||'Custom gym set',w=$('customGymWeight').value,r=$('customGymReps').value;
     if(!ex||(!w&&!r)) return;
