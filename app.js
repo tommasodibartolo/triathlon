@@ -16,7 +16,15 @@ forecast:[{ex:'DB Shoulder Press',why:'Last set failed at 7 reps but first two s
 missing:['Intervals API key','bodyweight daily','protein/kcal daily','sleep + HRV','RPE/RIR per set','race date + course','progress photos: front/side/back','thresholds: FTP, run LT pace, swim CSS']};
 const $=id=>document.getElementById(id);const q=s=>document.querySelector(s);let view='activity';
 const lockedSources=new Set(['garmin','peloton','intervals','api']);
-const baseMetabolicBurn=2100, bulkSurplus=250;
+const athleteProfile={age:46,heightCm:177,weightKg:75.75,goal:'Muscular triathlon athlete: swim/bike/run engine + visible athletic physique; cut fat without becoming endurance-skinny.',meals:'3 meals + 1 snack/day',coachSop:'Self-critical coach: correct the athlete when an ask conflicts with the goal.'};
+const baseMetabolicBurn=1640, restDayBurn=1970;
+function deficitRuleForDay(trainingBurn){
+  if(trainingBurn===0) return {type:'full rest / no exercise',deficit:'350–500 kcal',target:`${restDayBurn-500}–${restDayBurn-350} kcal`,why:'best day to create fat loss without compromising session quality'};
+  if(trainingBurn<400) return {type:'light training',deficit:'~350 kcal',target:`burn − 350 kcal`,why:'small fuel need, still protect recovery'};
+  if(trainingBurn<900) return {type:'normal training',deficit:'250–350 kcal',target:`burn − 250/350 kcal`,why:'fuel swim/bike/run and preserve muscle'};
+  return {type:'long / brick / hard day',deficit:'0–250 kcal',target:'maintenance to burn − 250 kcal',why:'performance and adaptation first; under-fueling hurts next sessions'};
+}
+const bulkSurplus=0;
 const weekPlan={1:['Incline DB Press','DB Shoulder Press','Cable Lateral Raise','Rear Delt Fly','Hammer Curl'],2:['Back Squat or Leg Press','Romanian Deadlift','Leg Curl','Calf Raise','Core plank'],3:['Lat Pulldown','Seated Row','Flat DB Press','DB Curl','Triceps Pressdown'],4:['Swim technique','Z2 bike','Mobility'],5:['Full-body pump','Lateral Raise','Rear Delt Fly','Leg Curl'],6:['Long bike / brick run'],0:['Recovery walk','Mobility','Progress photos']};
 let activity=load(STORE_KEY,base.sets);let images=load(IMAGE_KEY,[]);let mealApprovals=load(MEALS,{});
 function load(k,f){try{return JSON.parse(localStorage.getItem(k))||f}catch{return f}}function save(){localStorage.setItem(STORE_KEY,JSON.stringify(activity));localStorage.setItem(IMAGE_KEY,JSON.stringify(images));localStorage.setItem(MEALS,JSON.stringify(mealApprovals))}
@@ -42,8 +50,11 @@ function renderImages(){$('imageTimeline').innerHTML=images.map(img=>`<div class
 function calcBurn(){
   const rows=activity.filter(x=>x.day===$('day').value), device=rows.filter(x=>lockedSources.has(x.source));
   const deviceBurn=device.reduce((a,x)=>a+(+x.calories||0),0) || Math.round(rows.filter(x=>x.sport==='bike').length*520 + rows.filter(x=>x.sport==='run').length*420 + rows.filter(x=>x.sport==='swim').length*360 + rows.filter(x=>x.sport==='strength').length*180);
-  const total=baseMetabolicBurn+deviceBurn+bulkSurplus;
-  return {deviceBurn,total,protein:180,carbs:Math.round(total*.5/4),fat:Math.round(total*.25/9)};
+  const grossBurn=restDayBurn+deviceBurn;
+  const rule=deficitRuleForDay(deviceBurn);
+  const deficit=deviceBurn===0?370:deviceBurn<400?350:deviceBurn<900?300:150;
+  const total=Math.round(grossBurn-deficit);
+  return {deviceBurn,grossBurn,deficit,total,rule,protein:170,carbs:Math.round(total*.42/4),fat:Math.round(total*.25/9)};
 }
 function nutritionTemplate(){
   const b=calcBurn(), longRide=activity.some(x=>x.day===$('day').value&&x.sport==='bike'&&((+x.reps||0)>=60||/long|endurance/i.test(x.ex+x.note)));
@@ -58,7 +69,8 @@ function nutritionTemplate(){
 function renderNutrition(){
   const b=calcBurn(), day=$('day').value, plan=nutritionTemplate();
   const approved=mealApprovals[day]||{};
-  if($('nutritionMath')) $('nutritionMath').innerHTML=[['base burn',baseMetabolicBurn+' kcal'],['training burn',b.deviceBurn+' kcal'],['bulk surplus',bulkSurplus+' kcal'],['target intake',b.total+' kcal'],['macro target',`${b.protein}g P · ${b.carbs}g C · ${b.fat}g F`]].map(x=>`<div class="metric"><b>${x[1]}</b><small>${x[0]}</small></div>`).join('');
+  if($('nutritionMath')) $('nutritionMath').innerHTML=[['rest-day burn',restDayBurn+' kcal'],['training burn',b.deviceBurn+' kcal'],['gross burn',b.grossBurn+' kcal'],['planned deficit','−'+b.deficit+' kcal'],['target intake',b.total+' kcal'],['macro target',`${b.protein}g P · ${b.carbs}g C · ${b.fat}g F`]].map(x=>`<div class="metric"><b>${x[1]}</b><small>${x[0]}</small></div>`).join('');
+  if($('deficitRules')) $('deficitRules').innerHTML=[['goal',athleteProfile.goal],['coach SOP',athleteProfile.coachSop],['today type',b.rule.type],['deficit rule',b.rule.deficit],['intake logic',b.rule.target],['why',b.rule.why],['normal training day','250–350 kcal deficit; fuel performance first'],['long / brick day','0–250 kcal deficit; never chase fat loss at the cost of adaptation']].map(x=>`<div class="card"><b>${x[0]}</b><small>${x[1]}</small></div>`).join('');
   if($('nutritionPlan')) $('nutritionPlan').innerHTML=plan.map((m,i)=>`<div class="mealCard ${approved[m.slot]?'approved':''}"><div><b>${m.slot}</b><small>${m.when}</small></div><textarea id="meal${i}">${approved[m.slot]?.items||m.items}</textarea><div class="macroLine">${m.kcal} kcal · ${m.p}g P · ${m.c}g C · ${m.f}g F</div><small>${m.note}</small><div class="mealActions"><button data-approve-meal="${i}">${approved[m.slot]?'approved':'approve'}</button><button data-edit-meal="${i}">save edit</button></div></div>`).join('');
   document.querySelectorAll('[data-approve-meal]').forEach(btn=>btn.onclick=()=>{const m=plan[+btn.dataset.approveMeal];mealApprovals[day]=mealApprovals[day]||{};mealApprovals[day][m.slot]={...m,items:$('meal'+btn.dataset.approveMeal).value,approved:true};localStorage.setItem(MEALS,JSON.stringify(mealApprovals));activity.unshift({id:uid(),t:now(),day,source:'manual',sport:'nutrition',type:'nutrition',ex:m.slot,value:$('meal'+btn.dataset.approveMeal).value,note:'approved nutrition prescription'});save();render()});
   document.querySelectorAll('[data-edit-meal]').forEach(btn=>btn.onclick=()=>{const m=plan[+btn.dataset.editMeal];mealApprovals[day]=mealApprovals[day]||{};mealApprovals[day][m.slot]={...m,items:$('meal'+btn.dataset.editMeal).value,approved:false};localStorage.setItem(MEALS,JSON.stringify(mealApprovals));renderNutrition()});
